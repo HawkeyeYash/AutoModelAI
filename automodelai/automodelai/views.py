@@ -33,7 +33,7 @@ code_executor_agent = ConversableAgent(
 name="code_executor_agent",
 llm_config=False,
 code_execution_config={"executor": executor},
-human_input_mode="NEVER", # I have changed this from "ALWAYS" to "NEVER"
+human_input_mode="NEVER",
 default_auto_reply=
 "Please continue. If everything is done, just only reply 'TERMINATE'.",
 max_consecutive_auto_reply=7)
@@ -68,9 +68,9 @@ def clean_data(request):
             )
             os.makedirs(settings.CODING_DIR, exist_ok=True)
             file_path = os.path.join(settings.CODING_DIR, data.name)
-            # Save the uploaded file normally
+            
             with open(file_path, "wb") as f:
-                f.write(data.read())  # Directly save without chunks
+                f.write(data.read())
 
             message = f"""
             STRICTLY perform these steps on '{file_path}':
@@ -92,11 +92,10 @@ def clean_data(request):
             code_writer_agent,
             message=message,
             )
-            # Load the cleaned dataset
+            
             cleaned_file_path = os.path.join(settings.CODING_DIR, "cleaned_data.csv")
             df_cleaned = pd.read_csv(cleaned_file_path)
 
-            # Convert cleaned data to HTML table
             cleaned_table_html = df_cleaned.to_html(classes="table table-bordered table-striped", index=False)
 
             output = "Data cleaning and preprocessing completed successfully."
@@ -151,18 +150,14 @@ def analyze_data(request):
                         src_path = os.path.join(src_folder, file)
                         dest_path = os.path.join(dest_folder, file)
 
-                        # Copy only if the file is not already copied
                         if not os.path.exists(dest_path):
-                            shutil.copy2(src_path, dest_path)  # Copy file with metadata
+                            shutil.copy2(src_path, dest_path)
                         
-                        # Construct the URL for displaying images
                         image_files.append(f"{settings.MEDIA_URL}visualizations/{file}")
 
-            # Load the cleaned dataset
             cleaned_file_path = os.path.join(settings.CODING_DIR, "cleaned_data.csv")
             df_cleaned = pd.read_csv(cleaned_file_path)
 
-            # Convert cleaned data to HTML table
             cleaned_table_html = df_cleaned.to_html(classes="table table-bordered table-striped", index=False)
 
         except Exception as e:
@@ -215,25 +210,19 @@ def model_data(request):
                 message=message,
             )
 
-            # File path for storing insights
             model_insights_path = os.path.join(settings.CODING_DIR, "model_insights.txt")
 
-            # Read the generated insights from the file
             with open(model_insights_path, "r", encoding="utf-8") as f:
                 insights_content = f.read()
 
-            # Append results and leaderboard to insights
             with open(model_insights_path, "a", encoding="utf-8") as f:
                 f.write("\n\n### Model Evaluation Results ###\n")
                 f.write(str(results))
                 f.write("\n\n### Model Leaderboard ###\n")
                 f.write(leaderboard.to_string())
 
-            # Read final updated insights
             with open(model_insights_path, "r", encoding="utf-8") as f:
                 output = f.read()
-
-            # Collect visualization images
             
             src_folder = os.path.join(settings.MEDIA_ROOT, "visualizations")
             if os.path.exists(src_folder):
@@ -241,11 +230,9 @@ def model_data(request):
                     f"{settings.MEDIA_URL}visualizations/{file}"
                     for file in os.listdir(src_folder) if file.endswith('.png')
                 ]
-            # Load the cleaned dataset
             cleaned_file_path = os.path.join(settings.CODING_DIR, "cleaned_data.csv")
             df_cleaned = pd.read_csv(cleaned_file_path)
 
-            # Convert cleaned data to HTML table
             cleaned_table_html = df_cleaned.to_html(classes="table table-bordered table-striped", index=False)
 
         except Exception as e:
