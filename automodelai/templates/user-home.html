@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoModel.AI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
+    <style>
+        @import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
+        @import url(https://fonts.googleapis.com/css?family=Titillium+Web:300);
+        .fa-2x {
+        font-size: 2em;
+        }
+        .fa {
+        position: relative;
+        display: table-cell;
+        width: 60px;
+        height: 36px;
+        text-align: center;
+        vertical-align: middle;
+        font-size:20px;
+        }
+        .main-menu:hover,nav.main-menu.expanded {
+        width:250px;
+        overflow:visible;
+        }
+        .main-menu {
+        background: #212121;
+        border-right:1px solid #e5e5e5;
+        position:fixed;
+        top:0;
+        bottom:0;
+        height:100%;
+        left:0;
+        width:60px;
+        overflow:hidden;
+        -webkit-transition:width .05s linear;
+        transition:width .05s linear;
+        -webkit-transform:translateZ(0) scale(1,1);
+        z-index:1000;
+        }
+        .main-menu>ul {
+        margin:7px 0;
+        }
+
+        .main-menu li {
+        position:relative;
+        display:block;
+        width:250px;
+        }
+
+        .main-menu li>a {
+        position:relative;
+        display:table;
+        border-collapse:collapse;
+        border-spacing:0;
+        color:#999;
+        font-family: arial;
+        font-size: 14px;
+        text-decoration:none;
+        -webkit-transform:translateZ(0) scale(1,1);
+        -webkit-transition:all .1s linear;
+        transition:all .1s linear;
+        
+        }
+
+        .main-menu .nav-icon {
+        position:relative;
+        display:table-cell;
+        width:60px;
+        height:36px;
+        text-align:center;
+        vertical-align:middle;
+        font-size:18px;
+        }
+
+        .main-menu .nav-text {
+        position:relative;
+        display:table-cell;
+        vertical-align:middle;
+        width:190px;
+        font-family: 'Titillium Web', sans-serif;
+        }
+
+        .main-menu>ul.logout {
+        position:absolute;
+        left:0;
+        bottom:0;
+        }
+
+        .no-touch .scrollable.hover {
+        overflow-y:hidden;
+        }
+
+        .no-touch .scrollable.hover:hover {
+        overflow-y:auto;
+        overflow:visible;
+        }
+
+        a:hover,a:focus {
+        text-decoration:none;
+        }
+
+        nav {
+        -webkit-user-select:none;
+        -moz-user-select:none;
+        -ms-user-select:none;
+        -o-user-select:none;
+        user-select:none;
+        }
+
+        nav ul,nav li {
+        outline:0;
+        margin:0;
+        padding:0;
+        }
+        .main-menu li:hover>a,nav.main-menu li.active>a,.dropdown-menu>li>a:hover,.dropdown-menu>li>a:focus,.dropdown-menu>.active>a,.dropdown-menu>.active>a:hover,.dropdown-menu>.active>a:focus,.no-touch .dashboard-page nav.dashboard-menu ul li:hover a,.dashboard-page nav.dashboard-menu ul li.active a {
+        color:#fff;
+        background-color:coral;
+        }
+        .area {
+        float: left;
+        background: #e2e2e2;
+        width: 100%;
+        height: 100%;
+        }
+        @font-face {
+        font-family: 'Titillium Web';
+        font-style: normal;
+        font-weight: 300;
+        src: local('Titillium WebLight'), local('TitilliumWeb-Light'), url(http://themes.googleusercontent.com/static/fonts/titilliumweb/v2/anMUvcNT0H1YN4FII8wpr24bNCNEoFTpS2BTjF6FB5E.woff) format('woff');
+        }
+
+        .heading{
+            margin: 70px;
+            text-align: center;
+            color: #8cad95;
+            font-size: 30px;
+        }
+
+        .button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 16px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+          }
+          
+          .button1 {
+            margin-left: 600px;
+            background-color: white; 
+            color: black; 
+            border: 2px solid #4CAF50;
+            border-radius: 50px;
+          }
+          
+          .button1:hover {
+            background-color: #4CAF50;
+            color: white;
+          }
+          
+          .button2 {
+            background-color: white; 
+            color: black; 
+            border: 2px solid #008CBA;
+            border-radius: 50px;
+          }
+          
+          .button2:hover {
+            background-color: #008CBA;
+            color: white;
+          }
+    </style>
+    <style>
+        /* Center the loader */
+        #loader {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          z-index: 1;
+          width: 120px;
+          height: 120px;
+          margin: -76px 0 0 -76px;
+          border: 16px solid #f3f3f3;
+          border-radius: 50%;
+          border-top: 16px solid #3498db;
+          -webkit-animation: spin 2s linear infinite;
+          animation: spin 2s linear infinite;
+        }
+        
+        @-webkit-keyframes spin {
+          0% { -webkit-transform: rotate(0deg); }
+          100% { -webkit-transform: rotate(360deg); }
+        }
+        
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        
+        /* Add animation to "page content" */
+        .animate-bottom {
+          position: relative;
+          -webkit-animation-name: animatebottom;
+          -webkit-animation-duration: 1s;
+          animation-name: animatebottom;
+          animation-duration: 1s
+        }
+        
+        @-webkit-keyframes animatebottom {
+          from { bottom:-100px; opacity:0 } 
+          to { bottom:0px; opacity:1 }
+        }
+        
+        @keyframes animatebottom { 
+          from{ bottom:-100px; opacity:0 } 
+          to{ bottom:0; opacity:1 }
+        }
+        
+        #myDiv {
+          display: none;
+        }
+        </style>
+</head>
+<body onload="myFunction()" style="margin:0;">
+    <div class="area"></div>
+    <nav class="main-menu">
+    <ul>
+        <li>
+            <a href="{% url 'userhome' %}">
+                <i class="fa fa-home fa-2x"></i>
+                <span class="nav-text">
+                   Home
+                </span>
+            </a>
+          
+        </li>
+        
+        <li class="has-subnav">
+            <a href="{% url 'projectinfo' %}" target="_blank">
+               <i class="fa fa-camera-retro fa-2x"></i>
+                <span class="nav-text">
+                    Project Snaps / Info
+                </span>
+            </a>
+           
+        </li>
+        <li>
+            <a href="https://youtu.be/xgtDnnvhzJA?si=7XwRqahNkltIXEzl" target = "_blank">
+                <i class="fa fa-film fa-2x"></i>
+                <span class="nav-text">
+                    Video Links
+                </span>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'aboutus' %}" target = "_blank">
+               <i class="fa fa-info fa-2x"></i>
+                <span class="nav-text">
+                    About Us
+                </span>
+            </a>
+        </li>
+    </ul>
+</nav>
+<div id="loader"></div><div style="display:none;" id="myDiv" class="animate-bottom">
+<div class = "heading">
+<h1>Automate Data Cleaning and Modelling with AI</h1><br><br>
+<img src = "../static/agenticai.png" height = "500px"  style = "border-radius: 25px;"><br><br><br><br><br>
+<img src = "../static/agenticai2.png" height = "500px"  style = "border-radius: 25px;"><br><br><br><br>
+<img src = "../static/logo.png" height = "600px"  style = "border-radius: 25px;">
+</div>
+&emsp;&emsp;&emsp;&emsp;&emsp;<a href = "{% url 'project' %}" target="_blank"><button class="button button1" style = "margin-bottom:50px;">Get Started</button></a>
+
+</body>
+<script>
+    var myVar;
+    
+    function myFunction() {
+      myVar = setTimeout(showPage, 3000);
+    }
+    
+    function showPage() {
+      document.getElementById("loader").style.display = "none";
+      document.getElementById("myDiv").style.display = "block";
+    }
+    </script>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Info</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
+        
+        body {
+            background: black;
+            color: white;
+            font-family: 'Dancing Script', cursive;
+            text-align: center;
+        }
+        .font {
+            color: white;
+            font-size: 20px;
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            justify-content: center;
+            align-items: center;
+            margin: 20px auto;
+            max-width: 90%;
+        }
+        .project-snap {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+        }
+        .visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <br>
+    <h1 class="font">PROJECT INFORMATION</h1> 
+    <h3 class="font">AutoModel AI</h3>
+    
+    <!-- <object data="/static/AutoModelAI.pdf" height="600" width="80%"></object>  -->
+    <br>
+    <h2 class="font">Project Screenshots</h2><br>
+    <div class="gallery">
+        <div>
+            <img src="/static/Homepage.png" alt="Screenshot 1" class="project-snap">
+            <p class="font">Homepage</p>
+        </div>
+        <div>
+            <img src="/static/GenAITools.png" alt="Screenshot 6" class="project-snap">
+            <p class="font">In agentic AI built in tools and libraries are utilized to make different calculations and processing fast.
+                We can hardcode some common problems and pass them to the model to use them.
+            </p>
+        </div>
+        <div>
+            <img src="/static/AutoModelAI.png" alt="Screenshot 2" class="project-snap">
+            <p class="font">Click on get started to navigate to the project page</p>
+        </div>
+        <div>
+            <img src="/static/projecthome.png" alt="Screenshot 3" class="project-snap">
+            <p class="font">Here you can upload data and see the insights and visuals.</p>
+        </div>
+        <div>
+            <img src="/static/upload.png" alt="Screenshot 4" class="project-snap">
+            <p class="font">Click on upload.</p>
+        </div>
+        <div>
+            <img src="/static/datatable.png" alt="Screenshot 5" class="project-snap">
+            <p class="font">Select your data to be displayed on data table section.</p>
+        </div>
+        <div>
+            <img src="/static/cleaning.png" alt="Screenshot 7" class="project-snap">
+            <p class="font">Click on clean to initiate data cleaning.</p>
+        </div>
+        <div>
+            <img src="/static/analysis.png" alt="Screenshot 8" class="project-snap">
+            <p class="font">Similary you can analyze and the prompt to analyze the data will be passed on to the LLM.</p>
+        </div>
+        <div>
+            <img src="/static/model.png" alt="Screenshot 9" class="project-snap">
+            <p class="font">Finally the autogluon library will build some models on its own and
+                will produce the results. The LLM will analyze the data and the model evaluations to give
+                insights about the performance of the models and what else can be done to increase their performance.
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let images = document.querySelectorAll(".project-snap");
+            images.forEach((img, index) => {
+                setTimeout(() => {
+                    img.classList.add("visible");
+                }, index * 500);
+            });
+        });
+    </script>
+</body>
+</html>

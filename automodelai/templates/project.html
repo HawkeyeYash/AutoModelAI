@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoModel.AI Project</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            display: flex; 
+            height: 100vh; 
+            margin: 0; 
+            background-color: #2c3e50; 
+            color: #ecf0f1; 
+        }
+        .container { 
+            display: grid; 
+            grid-template-columns: 1fr 3fr; 
+            gap: 10px; 
+            width: 100%; 
+            padding: 10px;
+            height: min-content;
+        }
+        .panel0 { 
+            background: #34495e; 
+            border-radius: 8px; 
+            padding: 15px; 
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+            overflow: auto;
+        }
+        .panel1 {
+            background: #34495e; 
+            border-radius: 8px; 
+            padding: 15px;  
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+            overflow-x: auto;
+        }
+        #dataTable {
+            display: block;
+            max-height: 300px; /* Ensures table does not grow too much */
+            overflow-y: auto;  /* Enables vertical scrolling */
+            width: 100%; /* Keeps the table width proper */
+        }
+        .panel2 { 
+            background: #34495e; 
+            border-radius: 8px; 
+            padding: 15px; 
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+            overflow-y: auto;
+            height: 52vh;
+            width: 180%;
+        }
+        .panel3 { 
+            background: #34495e; 
+            border-radius: 8px; 
+            padding: 15px; 
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+            overflow-y: auto; 
+            height: 52vh;
+            margin-left: 29%;
+        }
+        .analysis { 
+            font-family:'Courier New', Courier, monospace;
+            font-size: 16px;
+        }
+        table { 
+            width: 100%;
+            border-collapse: collapse;
+            background: #1f2c38;
+            border-radius: 5px;
+            overflow: hidden;
+            display: block;
+            max-width: 100%; /* Prevents table from expanding too much */
+            overflow-x: auto; /* Enables horizontal scrolling */
+            white-space: nowrap; /* Prevents text wrapping */
+        }
+        th, td { 
+            border: 1px solid #ecf0f1;
+            padding: 5px; /* Reduces cell padding */
+            text-align: left;
+            font-size: 14px; /* Decreases font size */
+        }
+        th { 
+            background: #16a085; 
+            color: white; 
+        }
+        td {
+            white-space: nowrap; /* Prevents content from wrapping */
+            overflow: hidden;
+            text-overflow: ellipsis; /* Shortens long text */
+        }
+        button { 
+            background: #e74c3c; 
+            color: white; 
+            border: none; 
+            padding: 10px; 
+            margin: 5px; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            transition: 0.3s; 
+        }
+        button:hover { 
+            background: #c0392b; 
+        }
+        input[type="file"] { 
+            background: #2980b9; 
+            color: white; 
+            padding: 8px; 
+            border-radius: 5px; 
+            cursor: pointer; 
+        }
+        /* Overlay to cover entire screen */
+        #loadingOverlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6); /* Dark transparent background */
+            backdrop-filter: blur(5px); /* Soft blur effect */
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        /* Loading Box */
+        #loadingBox {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.3);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Circular Spinner Animation */
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(0, 0, 0, 0.2);
+            border-top: 5px solid #007bff; /* Blue spinner */
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        /* Spinning Animation */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Loading Text */
+        #loadingMessage {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div id="loadingOverlay">
+        <div id="loadingBox">
+            <div class="spinner"></div>
+            <p id="loadingMessage"></p>
+        </div>
+    </div>
+    <div class="container">
+         <!-- Upload Section -->
+         <div class="panel0">
+            <h2>Upload CSV</h2>
+
+            <form action = "{% url 'data' %}" method = "post" enctype = "multipart/form-data">
+            {% csrf_token %}
+            <input type="file" id="csvFileInput" name="dataset" accept=".csv" /><br><br>
+            <button type="submit" onclick="showLoading('Cleaning Data...')">Clean</button>
+            </form>
+
+            <form action = "{% url 'analyze' %}" method = "post">
+            {% csrf_token %}
+            <button type="submit" onclick="showLoading('Analyzing Data...')">Analyze</button>
+            </form>
+
+            <form action = "{% url 'model' %}" method = "post">
+            {% csrf_token %}
+            <button type="submit" onclick="showLoading('Building ML Model...')">Build Model</button>
+            </form>
+        </div>
+        <!-- Table View -->
+        <div class="panel1">
+            <h2>Data Table</h2>
+            {% if cleaned_table_html %}
+                <div id="cleanedDataTable" style="overflow-x: auto; overflow-y: auto; max-height: 300px;">
+                    {{ cleaned_table_html | safe }}
+                </div>
+            {% endif %}
+            <table id="dataTable">
+                <thead><tr id="tableHeader"></tr></thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+        <!-- Data Cleaning & Analysis Section -->
+        <div class="panel2">
+            <h2>Data Analysis / Model Insights</h2><br><br>
+            {% if model_insights_and_analysis %}
+            <pre class="analysis">{{ model_insights_and_analysis }}</pre>
+            {% endif %}
+        </div>
+        
+        <!-- Visualization Pane -->
+        <div class="panel3">
+            <h2>Visualizations</h2>
+                {% for img in image_files %}
+                    <img src="{{ img }}" alt="Visualization" style="max-width: 650px; margin: 25px;">
+                {% endfor %}
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('csvFileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                Papa.parse(file, {
+                    complete: function(results) {
+                        const data = results.data;
+                        const headerRow = document.getElementById('tableHeader');
+                        const tableBody = document.getElementById('tableBody');
+                        headerRow.innerHTML = '';
+                        tableBody.innerHTML = '';
+                        
+                        if (data.length > 0) {
+                            data[0].forEach(header => {
+                                let th = document.createElement('th');
+                                th.textContent = header;
+                                headerRow.appendChild(th);
+                            });
+                        }
+                        
+                        data.slice(1).forEach(row => {
+                            let tr = document.createElement('tr');
+                            row.forEach(cell => {
+                                let td = document.createElement('td');
+                                td.textContent = cell;
+                                tr.appendChild(td);
+                            });
+                            tableBody.appendChild(tr);
+                        });
+                    }
+                });
+            }
+        });
+        
+    </script>
+    <script>
+        document.getElementById('csvFileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (!file.name.endsWith('.csv')) {
+                alert("Please upload a valid CSV file.");
+                event.target.value = ""; 
+                return;
+            }
+        });
+    </script>
+    <script>
+        function showLoading(message) {
+            document.getElementById("loadingMessage").innerText = message;
+            document.getElementById("loadingOverlay").style.display = "flex";
+        }
+    
+        window.onload = function () {
+            document.getElementById("loadingOverlay").style.display = "none";
+        };
+    </script>
+</body>
+</html>

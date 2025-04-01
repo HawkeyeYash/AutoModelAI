@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>About Us</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+.column {
+  float: left;
+  width: 33.3%;
+  margin-bottom: 16px;
+  padding: 0 8px;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  margin: 8px;
+}
+
+.about-section {
+  padding: 50px;
+  text-align: center;
+  background-color: black;
+  color: white;
+}
+
+.about-section p{
+    text-align: center;
+    background-color: black;
+    font-size: larger;
+    color: white;
+  }
+
+.container {
+  padding: 0 16px;
+}
+
+.container::after, .row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.title {
+  color: grey;
+}
+
+.button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+.button:hover {
+  background-color: #555;
+}
+
+@media screen and (max-width: 650px) {
+  .column {
+    width: 100%;
+    display: block;
+  }
+}
+blockquote{
+  font-family: 'Dancing Script', cursive;
+  font-size: 20px;
+}
+</style>
+<style>
+  /* Center the loader */
+  #loader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+    width: 120px;
+    height: 120px;
+    margin: -76px 0 0 -76px;
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+  }
+  
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  /* Add animation to "page content" */
+  .animate-bottom {
+    position: relative;
+    -webkit-animation-name: animatebottom;
+    -webkit-animation-duration: 1s;
+    animation-name: animatebottom;
+    animation-duration: 1s
+  }
+  
+  @-webkit-keyframes animatebottom {
+    from { bottom:-100px; opacity:0 } 
+    to { bottom:0px; opacity:1 }
+  }
+  
+  @keyframes animatebottom { 
+    from{ bottom:-100px; opacity:0 } 
+    to{ bottom:0; opacity:1 }
+  }
+  
+  #myDiv {
+    display: none;
+  }
+  </style>
+</head>
+<body onload="myFunction()" style="margin:0;">
+  <div id="loader"></div><div style="display:none;" id="myDiv" class="animate-bottom">
+<div class="about-section">
+  <h1>About Us</h1><br>
+  <blockquote>
+  <p>"We are here revolutionizing the modern AI world with</p>
+  <p>immense support and help of Ernst & Young.</p>
+  <p>We present to you - AutoModelAI.</p>
+  <p>AutoModelAI uses agentic ai technology to</p>
+  <p>automate the process of ML model and</p>
+  <p>report generation and provide insights on data."</p><br>
+  <p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;~Yash Kumar Shukla, Data Science Intern at EY</p>
+  </blockquote>
+</div>
+<br>
+<h1 style="text-align:center">Our Team</h1><br>
+<div class="row">
+  <div class="column">
+    <div class="card">
+      <img src="../static/Yash Kr Shukla.png" alt="Yash" style="width:100%" height = "480">
+      <div class="container">
+        <h2>Yash Kumar Shukla</h2>
+        <p class="title">Data Science Intern</p>
+        <p>Student at K.R. Mangalam University</p>
+        <p>shukla02yash@gmail.com</p>
+        <p><a href = "https://www.linkedin.com/in/yash-kumar-shukla-29398725a/" target = "_blank"><button class="button">Contact</button></a></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="column">
+    <div class="card">
+      <img src="../static/rajatsir.png" alt="Rajat Sir" style="width:100%">
+      <div class="container">
+        <h2>Rajat Gupta</h2>
+        <p class="title">Project Mentor</p>
+        <p>Senior Manager at EY</p>
+        <p>rajat.gupta11.10@gmail.com</p>
+        <p><a href = "https://www.linkedin.com/in/rajat-gupta-2b118720/" target = "_blank"><button class="button">Contact</button></a></p>
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+  var myVar;
+  
+  function myFunction() {
+    myVar = setTimeout(showPage, 3000);
+  }
+  
+  function showPage() {
+    document.getElementById("loader").style.display = "none";
+    document.getElementById("myDiv").style.display = "block";
+  }
+  </script>
+</html>

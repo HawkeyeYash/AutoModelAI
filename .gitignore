@@ -1,0 +1,11 @@
+__pycache__/
+venv/
+.cache/
+.vscode/
+.env
+AutogluonModels/
+*.csv
+coding/
+media/
+automodelai/static/rajatsir.png
+automodelai/static/Yash Kr Shukla.png
