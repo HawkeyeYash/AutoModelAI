@@ -1,0 +1,10 @@
+django
+dotenv
+pandas
+numpy
+matplotlib
+seaborn
+sklearn
+shutil
+autogen
+autogluon
